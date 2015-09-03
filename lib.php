@@ -28,13 +28,14 @@ function activitytask_supports($feature) {
 		case FEATURE_MOD_ARCHETYPE:           return MOD_ARCHETYPE_RESOURCE;  //Type of module
 		//yes
         case FEATURE_BACKUP_MOODLE2:          return true;		//True if module supports backup/restore of moodle2 format
+        case FEATURE_COMPLETION_TRACKS_VIEWS: return true;		//True if module can support completion 'on view'
+        case FEATURE_COMPLETION_HAS_RULES: 	  return true;		//True if module has custom completion rule
 		//no
         case FEATURE_NO_VIEW_LINK:            return false;		//True if module has no 'view' page
         case FEATURE_MOD_INTRO:               return false;		//True if module supports intro editor
 		case FEATURE_IDNUMBER:                return false;		//True if module supports outcomes	
         case FEATURE_GROUPS:                  return false;		//True if module supports groups
         case FEATURE_GROUPINGS:               return false;		//True if module supports groupings
-        case FEATURE_COMPLETION_TRACKS_VIEWS: return false;		//True if module supports groupmembersonly
         case FEATURE_GRADE_HAS_GRADE:         return false;		//True if module can provide a grade
         case FEATURE_GRADE_OUTCOMES:          return false;		//True if module supports outcomes
         case FEATURE_SHOW_DESCRIPTION:        return false;		//True if module can show description on course main page
@@ -257,5 +258,35 @@ function activitytask_cm_info_dynamic(cm_info $cm) {
 	}
 	//*/
 }
+/**
+ * Obtains the automatic completion state for this module based on any conditions
+ * in assign settings.
+ *
+ * @param object $course Course
+ * @param object $cm Course-module
+ * @param int $userid User ID
+ * @param bool $type Type of comparison (or/and; can be used as return value if no conditions)
+ * @return bool True if completed, false if not, $type if conditions not set.
+ */
+function activitytask_get_completion_state($course, $cm, $userid, $type) {
+    global $CFG, $DB;
 
+	//obtain the activitytask instance
+    $activitytask = $DB->get_record('activitytask', array('id' => $cm->instance), '*', MUST_EXIST);
+	
+    // If completion option is enabled, evaluate it and return true/false.
+    if($activitytask->completiondone) {
+		
+		$params = array(
+			'userid' => $userid, 
+			'activitytask' => $cm->instance
+		);	
+		$status = $DB->get_record('activitytask_status', $params, 'id', IGNORE_MISSING);	
+        return ($status);
+    
+	} else {
+        // Completion option is not enabled so just return $type.
+        return $type;
+    }
+}
 

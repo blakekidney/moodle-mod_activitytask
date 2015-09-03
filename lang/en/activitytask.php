@@ -14,6 +14,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'Activity Task';
 $string['modulenameplural'] = 'Activity Tasks';
+$string['activitytask:addinstance'] = 'Add a new activity task';
+$string['activitytask:view'] = 'View activity task';
 $string['modulename_help'] = 'Use the activity task module for adding a task into a topic.';
 $string['activitytaskname'] = 'Activity Task';
 $string['activitytaskname_help'] = 'Use the activity task module for adding a task into a topic.';
@@ -27,6 +29,7 @@ $string['theadstudent'] = 'Student';
 $string['theadstatus'] = 'Task Status';
 $string['duedate'] = 'Date Due';
 $string['duedate_help'] = 'This is the date the task is due.';
+$string['completiondone'] = 'Student clicks Mark Done button to complete.';
 $string['details'] = 'Details';
 $string['details_help'] = 'This provides some extended details and information for the activity. When information is added, a view button is added next to the task.';
 $string['overviewheader'] = 'Completion Overview';

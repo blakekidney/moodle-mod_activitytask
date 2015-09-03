@@ -98,4 +98,26 @@ class mod_activitytask_mod_form extends moodleform_mod {
 		$default_values['details']['text'] = $default_values['intro'];		
 		parent::set_data($default_values);
 	}
+
+    /**
+     * Add any custom completion rules to the form.
+     *
+     * @return array Contains the names of the added form elements
+     */
+    public function add_completion_rules() {
+        $mform =& $this->_form;
+
+        $mform->addElement('checkbox', 'completiondone', '', get_string('completiondone', 'activitytask'));
+        return array('completiondone');
+    }
+
+    /**
+     * Determines if completion is enabled for this module.
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function completion_rule_enabled($data) {
+        return !empty($data['completiondone']);
+    }
 }

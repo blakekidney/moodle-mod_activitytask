@@ -12,6 +12,7 @@
 				<FIELD NAME="duedate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The due date for the activitytask."/>
 				<FIELD NAME="intro" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="The expanded details of an activity task."/>
 				<FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field."/>
+				<FIELD NAME="completiondone" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false"/>
 				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
 				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
 			</FIELDS>

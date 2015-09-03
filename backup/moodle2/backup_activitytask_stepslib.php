@@ -32,7 +32,7 @@ class backup_activitytask_activity_structure_step extends backup_activity_struct
 
         // Define the root element describing the activitytask instance.
         $activitytask = new backup_nested_element('activitytask', array('id'), array(
-            'name', 'duedate', 'intro', 'introformat', 'timemodified'));
+            'name', 'duedate', 'intro', 'introformat', 'completiondone', 'timemodified'));
 
         // If we had more elements, we would build the tree here.
 

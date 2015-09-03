@@ -13,12 +13,6 @@
 require_once('../../config.php');
 //load the module library
 //require_once('locallib.php');
-/*
-TASK
- - Add the date due at the top of the page.
- - Show whether past the date due or not.
-*/
-
 
 //get the course module id from the url
 $cmid = optional_param('id', 0, PARAM_INT); 
@@ -47,11 +41,27 @@ if($cmid) {
 //read only access 
 require_course_login($course);
 
-//pull the course context
-$context = context_course::instance($course->id);
+//pull the course context and module context
+$coursecontext = context_course::instance($course->id);
+$context = context_module::instance($cm->id);
 
 //determine whether this is a teacher or student
-$isteacher = has_capability('mod/activitytask:addinstance', $context);
+//$isteacher = has_capability('mod/activitytask:addinstance', $coursecontext);
+$isteacher = has_capability('mod/assign:grade', $coursecontext);
+
+$params = array(
+    'context' => $context,
+    'objectid' => $activitytask->id
+);
+$event = \mod_activitytask\event\course_module_viewed::create($params);
+$event->add_record_snapshot('course_modules', $cm);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('activitytask', $activitytask);
+$event->trigger();
+
+// Update 'viewed' state if required by completion system
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
 
 //check whether or not we have the ability add an activity task (if so, likely a teacher)
 if(!$isteacher && !$activitytask->intro) {
