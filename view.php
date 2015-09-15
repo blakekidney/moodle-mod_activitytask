@@ -62,20 +62,17 @@ $event->trigger();
 // Update 'viewed' state if required by completion system
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
-
+	
 //check whether or not we have the ability add an activity task (if so, likely a teacher)
 if(!$isteacher && !$activitytask->intro) {
-	//VIEW FOR A STUDENT
 	
 	//read only access to this page
 	require_login($course, true, $cm);
 
 	//redirect to the course page and disable this page as this is solely for adding a header to the course page
-	redirect($CFG->wwwroot.'/course/view.php?id='.$course->id);
+	//redirect($CFG->wwwroot.'/course/view.php?id='.$course->id);
 
 }
-
-//VIEW FOR A TEACHER
 
 //pull the language strings for the module
 $strmodname     = get_string('modulename', 'mod_activitytask');
